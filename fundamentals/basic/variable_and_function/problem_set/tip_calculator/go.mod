@@ -1,0 +1,3 @@
+module example.com/tip
+
+go 1.23.4
