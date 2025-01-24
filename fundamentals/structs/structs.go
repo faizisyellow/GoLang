@@ -20,7 +20,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// // ... do something awesome with that gathered data!
+	// ... do something awesome with that gathered data!
 	appUser.OutputUserDetails()
 	appUser.ClearUserName()
 	appUser.OutputUserDetails()
