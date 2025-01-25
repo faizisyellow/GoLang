@@ -14,22 +14,33 @@ type saver interface {
 	Save() error
 }
 
+// embeded existing interface
+type outputtable interface {
+	saver
+	Display()
+}
+
 func main() {
 	content := getTodoData()
 
 	todo, _ := todoType.New(content)
-	todo.Display()
 
-	// we can pass structs value,
-	// the saver interface will look up,
-	// the structs should be has method that defined in the interfaces.
-	saveData(todo)
+	outputData(todo)
 
 	fmt.Println("Saving the content succedeed!")
 
 }
 
 func saveData(value saver) {
+	err := value.Save()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func outputData(value outputtable) {
+	value.Display()
+
 	err := value.Save()
 	if err != nil {
 		panic(err)
