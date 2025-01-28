@@ -39,9 +39,8 @@ func main() {
 
 	// 4) Re-slice the slice from (3) and change it to contain the second
 	//		and last element of the original array.
-	sliceAgain := hobbiesSlice[1:]
-	sliceAgain = append(sliceAgain, hobbies[2])
-	fmt.Printf("Another Hobbies: %v\n", sliceAgain)
+	hobbiesSlice = hobbiesSlice[1:3]
+	fmt.Printf("Another Hobbies: %v\n", hobbiesSlice)
 
 	// 5) Create a "dynamic array" (slice) that contains your course goals (at least 2 goals)
 	goals := []string{"understand go", "build api"}
