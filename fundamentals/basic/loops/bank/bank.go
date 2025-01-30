@@ -66,7 +66,7 @@ func main() {
 			if depositAmount <= 0 {
 				fmt.Printf("Invalid amount. Must be greater than 0.")
 
-				// To continue looping from start.
+				// To continue looping back from start.
 				continue
 			}
 			accountBalance += depositAmount
