@@ -17,45 +17,110 @@ func New(n, e string, p int) Contact {
 }
 
 func main() {
-	// collect contacts
 	var contacts []Contact
-
-	//- input name, phone number, and email
 	var name, email string
-	var phoneNumber int
+	var phoneNumber, choose int
 
-	count := 3
-	for i := 0; i < count; i++ {
-		fmt.Printf("Name:\n")
+	fmt.Println("====Contact Management====")
+	fmt.Println("1. Add new contact")
+	fmt.Println("2. List all contacts")
+	fmt.Println("3. Search contact")
+	fmt.Println("4. Quit")
+
+	fmt.Print("Choose an option: ")
+	fmt.Scan(&choose)
+
+	switch choose {
+	case 1:
+		fmt.Print("Name: ")
 		fmt.Scan(&name)
 
-		fmt.Printf("Phone number: \n")
+		fmt.Print("Phone number: ")
 		fmt.Scan(&phoneNumber)
 
-		fmt.Printf("Email: \n")
+		fmt.Print("Email: ")
 		fmt.Scan(&email)
 
-		// add new contact and store to a slice
+		// Add new contact and store to a slice
 		contact := New(name, email, phoneNumber)
 		contacts = append(contacts, contact)
-	}
 
-	// store to json
-	err := SaveToFile("contacts.json", contacts)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+		// Store to JSON file
+		err := SaveToFile("contacts.json", contacts)
+		if err != nil {
+			fmt.Println("Error saving contacts:", err)
+		}
 
-	// TODO: see all contacts from json file
-	fmt.Println(contacts)
+	case 2:
+		// Read contacts from JSON file
+		savedContacts, err := ReadDataFromFile("contacts.json")
+		if err != nil {
+			fmt.Println("Error reading contacts:", err)
+			return
+		}
+
+		fmt.Println("Saved Contacts:")
+		for _, contact := range savedContacts {
+			fmt.Printf("Name: %s, Phone: %d, Email: %s\n",
+				contact.Name, contact.PhoneNumber, contact.Email)
+		}
+	case 3:
+		// search contact by name
+		contacts, err := ReadDataFromFile("contacts.json")
+		if err != nil {
+			fmt.Println("Can not read file ", err)
+			return
+		}
+
+		searchContact := SearchByName(contacts)
+		for i, value := range searchContact {
+			fmt.Printf("Found Contact %v: \nName: %v\nContact: %v\nEmail: %v\n", i+1, value.Name, value.PhoneNumber, value.Email)
+		}
+	case 4:
+		os.Exit(1)
+	}
 }
 
-func SaveToFile[T any](filename string, data T) error {
-	json, err := json.Marshal(data)
-
+func SaveToFile(filename string, data []Contact) error {
+	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	return os.WriteFile(filename, json, 0644)
+	return os.WriteFile(filename, jsonData, 0644)
+}
+
+func ReadDataFromFile(filename string) ([]Contact, error) {
+	var contacts []Contact
+
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data, &contacts)
+	if err != nil {
+		return nil, err
+	}
+
+	return contacts, nil
+}
+
+func SearchByName(data []Contact) []Contact {
+	var name string
+	var foundContacts []Contact
+
+	fmt.Print("Name: ")
+	fmt.Scan(&name)
+
+	for _, contact := range data {
+		if contact.Name == name {
+			foundContacts = append(foundContacts, contact)
+		}
+	}
+
+	if len(foundContacts) == 0 {
+		fmt.Printf("Contact not found")
+	}
+	return foundContacts
 }
