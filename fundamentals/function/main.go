@@ -1,37 +1,24 @@
-/*
-Deep dive into function in golang
-*/
 package main
 
 import "fmt"
 
 func main() {
-	numbers := []int{1, 2, 3}
+	numbers := []int{1, 2, 3, 4, 5, 6}
 
-	// pass function as argument without param and return.
-	double := transformNumbers(&numbers, doubleing)
+	double := tranformsNumbers(&numbers, double)
 	fmt.Println(double)
-
-	// pass function as argument without param and return.
-	tripples := transformNumbers(&numbers, tripple)
-
-	fmt.Println(tripples)
 }
 
-func transformNumbers(x *[]int, transform func(int) int) []int {
-	var dbnumber []int
-	for _, v := range *x {
-		// calling transform function with one argument
-		dbnumber = append(dbnumber, transform(v))
+func tranformsNumbers(n *[]int, tranform func(int) int) []int {
+	dnumbers := []int{}
+
+	for _, v := range *n {
+		dnumbers = append(dnumbers, tranform(v))
 	}
 
-	return dbnumber
+	return dnumbers
 }
 
-func doubleing(x int) int {
-	return x * 2
-}
-
-func tripple(i int) int {
-	return i * 3
+func double(n int) int {
+	return n * 2
 }
