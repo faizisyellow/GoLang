@@ -23,19 +23,40 @@ With a plan in mind, she started building her perfect to-do list. Would this sys
    2. Decomposition
       Components:
       - Input task
-      - Task storage
-      - Remove function when task is done
+      - Task storage [name task and status task]
       - See all tasks
+      - Remove function when task is done
 
    3. Pattern Recognition 
+      - CRUD operation (Create, Read, and Delete)
+      - Input/Output
+      - Data persistence
+   
+   4. Essential Focus
+      Must Have:
+      - Task name
+      - Remove task capability
+      - Data persistence
 
-      // TODO: 
-       1. Similar Problems
-          ▢ What existing solutions are similar?
-          ▢ What patterns can we reuse?
-          ▢ What common problems might we face?
+      Can Skip:
+      - Complex UI
+      - Advanced features
 
-       2. Common Operations
-          ▢ Create/Read/Update/Delete (CRUD)
-          ▢ Input/Process/Output
-          ▢ Store/Retrieve
+   5. Algorithm Flow
+      - Start program
+      - Show options 
+      - Process show
+      - [option] Create new task
+         - Input task name
+         - Save task to task storage
+         - Show all task
+         - End program
+      - [option] Complete / remove task
+         - Input task name
+         - Say it's Complete
+         - Remove task
+         - End program
+      - [option] list task
+         - Show all task
+         - End program
+      - [option] Exit program
